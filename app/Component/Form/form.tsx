@@ -1,39 +1,64 @@
-"use client";
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  updateFirstName,
+  updateLastName,
+  updateEmail,
+  updateAddress,
+  resetData,
+} from "../../Redux-Store/formslice";
+
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const Form = () => {
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    address: "",
-  });
+  const dispatch = useDispatch();
+  const formData = useSelector((state: any) => state.form);
 
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = event.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: value,
-    }));
+    switch (name) {
+      case "firstName":
+        dispatch(updateFirstName(value));
+        break;
+      case "lastName":
+        dispatch(updateLastName(value));
+        break;
+      case "email":
+        dispatch(updateEmail(value));
+        break;
+      case "address":
+        dispatch(updateAddress(value));
+        break;
+      default:
+        break;
+    }
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (!emailRegex.test(formData.email)) {
+      alert("Please enter a valid email address.");
+      return;
+    }
     console.log("Form submitted:", formData);
   };
 
+  const handlereset = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    dispatch(resetData());
+  };
+
   return (
-    <section className="flex  " id="form">
-      <div className="bg-white mt-0 p-1 rounded-lg ">
+    <section className="flex" id="form">
+      <div className="bg-white mt-0 rounded-lg">
         <form onSubmit={handleSubmit}>
           <fieldset className="flex flex-col space-y-2">
             <div className="flex flex-wrap md:flex-row">
-              <div className="mr-4 mb-2 md:mb-2  ">
+              <div className="mr-4 mb-2 md:mb-2">
                 <label
                   htmlFor="firstName"
-                  className="text-sm p-2 font-medium text-gray-600 block mb-1"
+                  className="text-sm font-medium text-gray-600 block mb-1"
                 >
                   First Name
                 </label>
@@ -43,15 +68,15 @@ const Form = () => {
                   name="firstName"
                   value={formData.firstName}
                   onChange={handleChange}
-                  className="bg-white border  border-gray-200 text-black text-sm rounded-lg block w-full p-3.5"
+                  className="bg-white border border-gray-200 text-black text-sm rounded-lg block w-full p-3.5"
                   placeholder=""
                   required
                 />
               </div>
-              <div className="mr-4  mb-2 md:mb-2 ">
+              <div className="mr-4 mb-2 md:mb-2">
                 <label
                   htmlFor="lastName"
-                  className="text-sm font-medium p-2 text-gray-600 block mb-1"
+                  className="text-sm font-medium text-gray-600 block mb-1"
                 >
                   Last Name
                 </label>
@@ -61,16 +86,16 @@ const Form = () => {
                   name="lastName"
                   value={formData.lastName}
                   onChange={handleChange}
-                  className="bg-white border border-gray-200 text-black text-sm rounded-lg block w-full  p-3.5"
+                  className="bg-white border border-gray-200 text-black text-sm rounded-lg block w-full p-3.5"
                   placeholder=""
                   required
                 />
               </div>
             </div>
-            <div className="  mb-2 md:mb-2  ">
+            <div className="mb-2 md:mb-2">
               <label
                 htmlFor="email"
-                className="text-sm font-medium p-2 text-gray-600 block mb-1"
+                className="text-sm font-medium text-gray-600 block mb-1"
               >
                 Email
               </label>
@@ -99,16 +124,17 @@ const Form = () => {
               required
             />
           </fieldset>
-          <div className="absolute flex w-2/12 mt-10">
+          <div className="absolute flex items-end gap-4 w-5/12 mt-20">
             <button
-              type="reset"
-              className="bg-gray-100 text-sm border hover:bg-gray-100 text-black h-10 ml-auto w-24 font-semibold py-2.5 px-5 rounded-full"
+              onClick={handlereset}
+              type="button"
+              className="bg-gray-200 text-sm border-x-2 hover:bg-gray-300 text-black h-10 ml-auto w-24 font-semibold rounded-xl"
             >
               Reset
             </button>
             <button
               type="submit"
-              className="bg-sky-400 border text-sm hover:bg-gray-500 text-white ml-3 h-10 w-24 font-semibold py-2.5 px-5 rounded-full"
+              className="bg-blue-500 border-x-2 text-sm hover:bg-blue-800 text-white h-10 w-24 font-semibold rounded-xl"
             >
               Save
             </button>

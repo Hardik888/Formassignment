@@ -5,10 +5,10 @@ export const Sidebar = ({ isSidebarOpen }: any) => {
     <nav
       className={`${
         isSidebarOpen ? "block" : "hidden"
-      } pt-4 pb-6 bg-transparent rounded-xl shadow-md lg:hidden`}
+      } pt-4 pb-6 bg-transparent rounded-xl shadow-md`}
     >
       <div className="flow-root">
-        <div className="flex flex-col px-6 -my-2 space-y-1">
+        <div className="flex flex-col ml px-6 -my-2 space-y-1">
           <Image src="/image/logo.png" width={40} height={33} alt="logo" />
           <a
             href="#"

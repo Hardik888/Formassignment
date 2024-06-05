@@ -1,10 +1,7 @@
 export interface FormData {
   firstName: string;
-  lastname: string;
+  lastName: string;
   email: string;
   address: string;
-  profilePicture: {
-    data: Buffer;
-    contentType: string;
-  } | null;
+  profilePicture: File | null;
 }

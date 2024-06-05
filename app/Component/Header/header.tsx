@@ -11,19 +11,19 @@ const Header = () => {
   };
 
   return (
-    <header className="pb-6 bg-white border ml-1 border-b-gray-200 lg:pb-0 w-auto">
+    <header className="pb-6 bg-white border   border-b-gray-100 lg:pb-0 w-full">
       <div className="px-4   sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 lg:h-20">
           <div className="flex items-center   w-3/12 mr-80 ">
             {" "}
             <Image src="/image/acme.png" alt="Logo" width={15} height={10} />
-            <h1 className=" text-base font-bold text-black transition-all duration-200 ml-2  hover:text-gray-300 focus:text-gray-200">
+            <h1 className="font-bold text-xl text-black transition-all duration-200 ml-4  hover:text-gray-100 focus:text-gray-800">
               AcmeCo
             </h1>
           </div>
           <button
             type="button"
-            className="inline-flex p-2 text-black transition-all duration-200 rounded-md lg:hidden focus:bg-gray-100  hover:text-gray-300"
+            className="inline-flex  text-black  transition-all duration-200 rounded-md lg:hidden focus:bg-gray-100  hover:text-gray-300"
             onClick={toggleSidebar}
           >
             {isSidebarOpen ? "x" : "||"}

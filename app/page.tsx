@@ -1,19 +1,24 @@
+"use client";
+import { Provider } from "react-redux";
 import Form from "./Component/Form/form";
 import Hero from "./Component/Form/hero";
 import Header from "./Component/Header/header";
+import { store } from "./Redux-Store/store";
 
 export default function Home() {
   return (
-    <main className="flex flex-col  ">
-      <Header />
-      <section className="flex ml-24 w-2/4  ">
-        <div className="ml-1 -mt-14  ">
-          <Hero />
-          <div className="-ml-1 -mt-40">
-            <Form />
+    <Provider store={store}>
+      <main className="flex flex-col  ">
+        <Header />
+        <section className="flex ml-24 w-2/4  ">
+          <div className="ml-1 -mt-14 p-4 ">
+            <Hero />
+            <div className="-ml-1 -mt-36 ">
+              <Form />
+            </div>
           </div>
-        </div>
-      </section>
-    </main>
+        </section>
+      </main>
+    </Provider>
   );
 }

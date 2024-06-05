@@ -20,6 +20,7 @@ const ProfilePictureUpload: React.FC<ProfilePictureUploadProps> = ({
         const result = reader.result as string;
         setPreview(result);
         onUpload(result);
+        console.log(result);
       };
       reader.readAsDataURL(file);
     }
@@ -71,8 +72,8 @@ const ProfilePictureUpload: React.FC<ProfilePictureUploadProps> = ({
               width={20}
               height={20}
             />
-            <button className=" text-black text-xs font-bold w-44">
-              Drag or add your profile photo
+            <button className=" text-black text-xs font-bold ">
+              Drag or add your profile
             </button>
           </div>
         )}
