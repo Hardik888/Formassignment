@@ -11,7 +11,7 @@ const Header = () => {
   };
 
   return (
-    <header className="pb-6 bg-white border   border-b-gray-100 lg:pb-0 w-full">
+    <header className="pb-6 bg-white mr-1   border-b-gray-100 lg:pb-0 w-auto">
       <div className="px-4   sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 lg:h-20">
           <div className="flex items-center   w-3/12 mr-80 ">
@@ -23,7 +23,7 @@ const Header = () => {
           </div>
           <button
             type="button"
-            className="inline-flex  text-black  transition-all duration-200 rounded-md lg:hidden focus:bg-gray-100  hover:text-gray-300"
+            className=" -ml-12 text-black   transition-all duration-200 rounded-md lg:hidden focus:bg-gray-100  hover:text-gray-300"
             onClick={toggleSidebar}
           >
             {isSidebarOpen ? "x" : "||"}

@@ -52,7 +52,7 @@ const ProfilePictureUpload: React.FC<ProfilePictureUploadProps> = ({
   return (
     <div className="flex mt-4 ">
       <div
-        className="flex  bg-gray-200 rounded-full p-3  cursor-pointer"
+        className="flex  bg-gray-100 rounded-full p-3  cursor-pointer"
         onDragOver={handleDragOver}
         onDrop={handleDrop}
         onClick={() => document.getElementById("fileInput")?.click()}
@@ -73,7 +73,7 @@ const ProfilePictureUpload: React.FC<ProfilePictureUploadProps> = ({
               height={20}
             />
             <button className=" text-black text-xs font-bold ">
-              Drag or add your profile
+              Drag or add
             </button>
           </div>
         )}
@@ -102,7 +102,7 @@ const Hero: React.FC = () => {
   return (
     <section className=" mb-44 mt-20 h-max">
       {" "}
-      <h1 className="w-full font-bold p-2 text-3xl  ">My Profile</h1>
+      <h1 className="w-full font-bold text-2xl pb-2">MyProfile</h1>
       <ProfilePictureUpload onUpload={setProfilePicture} />
     </section>
   );
