@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import React, { useState, ChangeEvent, DragEvent } from "react";
 
 interface ProfilePictureUploadProps {
@@ -50,7 +51,7 @@ const ProfilePictureUpload: React.FC<ProfilePictureUploadProps> = ({
   return (
     <div className="flex mt-4 ">
       <div
-        className="flex  bg-gray-200 rounded-xl p-4 cursor-pointer"
+        className="flex  bg-gray-200 rounded-full p-3  cursor-pointer"
         onDragOver={handleDragOver}
         onDrop={handleDrop}
         onClick={() => document.getElementById("fileInput")?.click()}
@@ -59,11 +60,20 @@ const ProfilePictureUpload: React.FC<ProfilePictureUploadProps> = ({
           <img
             src={preview}
             alt="Profile Preview"
-            className="w-32  h-32 object-cover rounded-full"
+            className="w-10  h-10  rounded-full"
           />
         ) : (
-          <div>
-            <button className=" text-gray-500">Add a profile</button>
+          <div className="flex items-stretch  gap-2">
+            <Image
+              src="/image/camera2.png"
+              alt="Logo"
+              className="ml-0"
+              width={20}
+              height={20}
+            />
+            <button className=" text-black text-xs font-bold w-44">
+              Drag or add your profile photo
+            </button>
           </div>
         )}
       </div>
@@ -77,9 +87,9 @@ const ProfilePictureUpload: React.FC<ProfilePictureUploadProps> = ({
       {preview && (
         <button
           onClick={handleRemove}
-          className="mt-4 bg-red-500 text-white px-4 py-2 rounded-full"
+          className="mt-4 bg-red-200 text-black ml-2  w-7 h-7 rounded-full"
         >
-          Remove
+          X
         </button>
       )}
     </div>
@@ -91,7 +101,7 @@ const Hero: React.FC = () => {
   return (
     <section className=" mb-44 mt-20 h-max">
       {" "}
-      <h1 className="w-full font-medium text-2xl  ">My Profile</h1>
+      <h1 className="w-full font-bold p-2 text-3xl  ">My Profile</h1>
       <ProfilePictureUpload onUpload={setProfilePicture} />
     </section>
   );

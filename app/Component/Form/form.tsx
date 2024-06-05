@@ -25,7 +25,7 @@ const Form = () => {
   };
 
   return (
-    <section className="flex  -mt-24 " id="form">
+    <section className="flex  " id="form">
       <div className="bg-white mt-0 p-1 rounded-lg ">
         <form onSubmit={handleSubmit}>
           <fieldset className="flex flex-col space-y-2">

@@ -6,10 +6,12 @@ export default function Home() {
   return (
     <main className="flex flex-col  ">
       <Header />
-      <section className="ml-24 w-2/4  ">
+      <section className="flex ml-24 w-2/4  ">
         <div className="ml-1 -mt-14  ">
           <Hero />
-          <Form />
+          <div className="-ml-1 -mt-40">
+            <Form />
+          </div>
         </div>
       </section>
     </main>

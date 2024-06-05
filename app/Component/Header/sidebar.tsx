@@ -12,37 +12,37 @@ export const Sidebar = ({ isSidebarOpen }: any) => {
           <Image src="/image/logo.png" width={40} height={33} alt="logo" />
           <a
             href="#"
-            className="inline-flex py-2 text-base font-semibold text-gray-700 transition-all duration-200  hover:text-amber-500 focus:text-blue-600"
+            className="inline-flex py-2 text-base font-semibold text-gray-700 transition-all duration-200  hover:text-gray-300 focus:text-blue-600"
           >
             Home
           </a>
           <a
             href="#"
-            className="inline-flex py-2 text-base font-semibold text-gray-700 transition-all duration-200  hover:text-amber-500 focus:text-blue-600"
+            className="inline-flex py-2 text-base font-semibold text-gray-700 transition-all duration-200  hover:text-gray-300 focus:text-blue-600"
           >
             Book
           </a>
           <a
             href="#"
-            className="inline-flex py-2 text-base font-semibold text-gray-700 transition-all duration-200  hover:text-amber-500 focus:text-blue-600"
+            className="inline-flex py-2 text-base font-semibold text-gray-700 transition-all duration-200  hover:text-gray-300 focus:text-blue-600"
           >
             Guests
           </a>
           <a
             href="#"
-            className="inline-flex py-2 text-base font-semibold text-gray-700 transition-all duration-200  hover:text-amber-500 focus:text-blue-600"
+            className="inline-flex py-2 text-base font-semibold text-gray-700 transition-all duration-200  hover:text-gray-300 focus:text-blue-600"
           >
             Events
           </a>
           <a
             href="#"
-            className="inline-flex py-2 text-base font-semibold text-gray-700 transition-all duration-200  hover:text-amber-500 focus:text-blue-600"
+            className="inline-flex py-2 text-base font-semibold text-gray-700 transition-all duration-200  hover:text-gray-300 focus:text-blue-600"
           >
             Services
           </a>
           <a
             href="#"
-            className="inline-flex py-2 text-base font-semibold text-gray-700 transition-all duration-200  hover:text-amber-500 focus:text-blue-600"
+            className="inline-flex py-2 text-base font-semibold text-gray-700 transition-all duration-200  hover:text-gray-300 focus:text-blue-600"
           >
             Support
           </a>
