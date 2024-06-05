@@ -11,22 +11,19 @@ const Header = () => {
   };
 
   return (
-    <header className="pb-6 bg-white border border-b-gray-200 lg:pb-0">
+    <header className="pb-6 bg-white border border-b-gray-200 lg:pb-0 w-auto">
       <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 lg:h-20">
-          <div className="flex items-center">
+          <div className="flex items-center   w-3/12 mr-80 ">
             {" "}
             <Image src="/image/acme.png" alt="Logo" width={15} height={10} />
-            <a
-              href="#"
-              className="text-xl font-bold text-gray-800 transition-all duration-200 ml-5  hover:text-amber-500 focus:text-gray-200"
-            >
+            <h1 className="text-xl font-bold text-gray-800 transition-all duration-200 ml-2  hover:text-amber-500 focus:text-gray-200">
               Acme Co
-            </a>
+            </h1>
           </div>
           <button
             type="button"
-            className="inline-flex p-2 text-gray-700 transition-all duration-200 rounded-md lg:hidden focus:bg-gray-100  hover:text-amber-500"
+            className="inline-flex p-2 text-black transition-all duration-200 rounded-md lg:hidden focus:bg-gray-100  hover:text-amber-500"
             onClick={toggleSidebar}
           >
             {isSidebarOpen ? "x" : "||"}
@@ -35,37 +32,37 @@ const Header = () => {
           <nav className="hidden lg:flex lg:items-center lg:space-x-10">
             <a
               href="#"
-              className="text-base font-semibold text-gray-700 transition-all duration-200 hover:text-amber-500 focus:text-blue-600"
+              className="text-base font-semibold text-black transition-all duration-200 hover:text-amber-500 focus:text-blue-600"
             >
               Home
             </a>
             <a
               href="#"
-              className="text-base font-semibold text-gray-700 transition-all duration-200  hover:text-amber-500 focus:text-blue-600"
+              className="text-base font-semibold text-black transition-all duration-200  hover:text-amber-500 focus:text-blue-600"
             >
               Book
             </a>
             <a
               href="#"
-              className="text-base font-semibold text-gray-700 transition-all duration-200  hover:text-amber-500 focus:text-blue-600"
+              className="text-base font-semibold text-black transition-all duration-200  hover:text-amber-500 focus:text-blue-600"
             >
               Guests
             </a>
             <a
               href="#"
-              className="text-base font-semibold text-gray-700 transition-all duration-200  hover:text-amber-500 focus:text-blue-600"
+              className="text-base font-semibold text-black transition-all duration-200  hover:text-amber-500 focus:text-blue-600"
             >
               Events
             </a>
             <a
               href="#"
-              className="text-base font-semibold text-gray-700 transition-all duration-200  hover:text-amber-500 focus:text-blue-600"
+              className="text-base font-semibold text-black transition-all duration-200  hover:text-amber-500 focus:text-blue-600"
             >
               Services
             </a>
             <a
               href="#"
-              className="text-base font-semibold text-gray-700 transition-all duration-200  hover:text-amber-500 focus:text-blue-600"
+              className="text-base font-semibold text-black transition-all duration-200  hover:text-amber-500 focus:text-blue-600"
             >
               Support
             </a>

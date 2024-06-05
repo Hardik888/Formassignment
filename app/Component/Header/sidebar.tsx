@@ -14,19 +14,19 @@ export const Sidebar = ({ isSidebarOpen }: any) => {
             href="#"
             className="inline-flex py-2 text-base font-semibold text-gray-700 transition-all duration-200  hover:text-amber-500 focus:text-blue-600"
           >
-            Home{" "}
+            Home
           </a>
           <a
             href="#"
             className="inline-flex py-2 text-base font-semibold text-gray-700 transition-all duration-200  hover:text-amber-500 focus:text-blue-600"
           >
-            Book{" "}
+            Book
           </a>
           <a
             href="#"
             className="inline-flex py-2 text-base font-semibold text-gray-700 transition-all duration-200  hover:text-amber-500 focus:text-blue-600"
           >
-            Guests{" "}
+            Guests
           </a>
           <a
             href="#"
