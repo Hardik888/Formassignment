@@ -4,10 +4,14 @@ import Header from "./Component/Header/header";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen -mt-1 flex-col">
+    <main className="flex flex-col  ">
       <Header />
-      <Hero />
-      <Form />
+      <section className="ml-24 w-2/4  ">
+        <div className="ml-1 -mt-14  ">
+          <Hero />
+          <Form />
+        </div>
+      </section>
     </main>
   );
 }

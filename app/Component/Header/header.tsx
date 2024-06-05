@@ -11,14 +11,14 @@ const Header = () => {
   };
 
   return (
-    <header className="pb-6 bg-white border border-b-gray-200 lg:pb-0 w-auto">
-      <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+    <header className="pb-6 bg-white border ml-1 border-b-gray-200 lg:pb-0 w-auto">
+      <div className="px-4   sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 lg:h-20">
           <div className="flex items-center   w-3/12 mr-80 ">
             {" "}
             <Image src="/image/acme.png" alt="Logo" width={15} height={10} />
-            <h1 className="text-xl font-bold text-gray-800 transition-all duration-200 ml-2  hover:text-amber-500 focus:text-gray-200">
-              Acme Co
+            <h1 className=" text-base font-bold text-gray-800 transition-all duration-200 ml-2  hover:text-amber-500 focus:text-gray-200">
+              AcmeCo
             </h1>
           </div>
           <button
