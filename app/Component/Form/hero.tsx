@@ -1,16 +1,15 @@
-"use client";
-
 import Image from "next/image";
-import React, { useState, ChangeEvent, DragEvent } from "react";
+import React, { useState, ChangeEvent, DragEvent, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { updateProfilePicture } from "../../Redux-Store/formslice";
+import Form from "./form";
 
-interface ProfilePictureUploadProps {
-  onUpload: (image: string | null) => void;
-}
-
-const ProfilePictureUpload: React.FC<ProfilePictureUploadProps> = ({
-  onUpload,
+export const ProfilePictureUpload: React.FC<{ onRemove: () => void }> = ({
+  onRemove,
 }) => {
   const [preview, setPreview] = useState<string | null>(null);
+  const dispatch = useDispatch();
+  const profilePicture = useSelector((state: any) => state.profilePicture); // Assuming profilePicture is stored in the Redux state
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -18,9 +17,8 @@ const ProfilePictureUpload: React.FC<ProfilePictureUploadProps> = ({
       const reader = new FileReader();
       reader.onloadend = () => {
         const result = reader.result as string;
+        dispatch(updateProfilePicture(result));
         setPreview(result);
-        onUpload(result);
-        console.log(result);
       };
       reader.readAsDataURL(file);
     }
@@ -38,15 +36,14 @@ const ProfilePictureUpload: React.FC<ProfilePictureUploadProps> = ({
       reader.onloadend = () => {
         const result = reader.result as string;
         setPreview(result);
-        onUpload(result);
       };
       reader.readAsDataURL(file);
     }
   };
 
   const handleRemove = () => {
+    onRemove();
     setPreview(null);
-    onUpload(null);
   };
 
   return (
@@ -61,19 +58,19 @@ const ProfilePictureUpload: React.FC<ProfilePictureUploadProps> = ({
           <img
             src={preview}
             alt="Profile Preview"
-            className="w-10  h-10  rounded-full"
+            className="w-24  h-24 rounded-full "
           />
         ) : (
           <div className="flex items-stretch  gap-2">
             <Image
               src="/image/camera2.png"
               alt="Logo"
-              className="ml-0"
+              className=""
               width={20}
-              height={20}
+              height={8}
             />
             <button className=" text-black text-xs font-bold ">
-              Drag or add
+              Drag or add Picture
             </button>
           </div>
         )}
@@ -98,12 +95,16 @@ const ProfilePictureUpload: React.FC<ProfilePictureUploadProps> = ({
 };
 
 const Hero: React.FC = () => {
+  const handleUpload = (image: string | null) => {
+    setProfilePicture(image);
+  };
+
   const [profilePicture, setProfilePicture] = useState<string | null>(null);
   return (
     <section className=" mb-44 mt-20 h-max">
       {" "}
       <h1 className="w-full font-bold text-2xl pb-2">MyProfile</h1>
-      <ProfilePictureUpload onUpload={setProfilePicture} />
+      <ProfilePictureUpload />
     </section>
   );
 };

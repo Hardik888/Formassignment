@@ -5,13 +5,17 @@ import {
   updateEmail,
   updateAddress,
   resetData,
+  updateProfilePicture,
 } from "../../Redux-Store/formslice";
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+import { useState } from "react";
+import HandlePost from "@/app/Api/handlepost";
 
 const Form = () => {
   const dispatch = useDispatch();
   const formData = useSelector((state: any) => state.form);
+  const [emailError, setEmailError] = useState<string>("");
 
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -26,6 +30,7 @@ const Form = () => {
         break;
       case "email":
         dispatch(updateEmail(value));
+        setEmailError(""); // Reset email error when email input changes
         break;
       case "address":
         dispatch(updateAddress(value));
@@ -35,18 +40,35 @@ const Form = () => {
     }
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (!emailRegex.test(formData.email)) {
-      alert("Please enter a valid email address.");
-      return;
+    if (
+      formData.firstName !== "" &&
+      formData.lastName !== "" &&
+      emailRegex.test(formData.email) &&
+      formData.address !== "" &&
+      formData.profilePicture !== null
+    ) {
+      const response = await HandlePost(formData);
+      if (response.status === 201) {
+        dispatch(updateProfilePicture("")); // Change empty string to null
+        dispatch(resetData());
+      }
+      return response;
+    } else {
+      if (!emailRegex.test(formData.email)) {
+        setEmailError("Please enter a valid email address");
+      } else {
+        setEmailError("");
+      }
+      console.error("Form data is incomplete or invalid");
     }
-    console.log("Form submitted:", formData);
   };
 
   const handlereset = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     dispatch(resetData());
+    dispatch(updateProfilePicture(null)); // Update the profile picture to null upon reset
   };
 
   return (
@@ -58,17 +80,16 @@ const Form = () => {
               <div className="mr-4 mb-2 md:mb-2">
                 <label
                   htmlFor="firstName"
-                  className="text-sm font-medium text-gray-600 block mb-1"
+                  className="text-sm font-medium text-black block mb-1"
                 >
                   First Name
                 </label>
                 <input
-                  type="text"
                   id="firstName"
                   name="firstName"
                   value={formData.firstName}
                   onChange={handleChange}
-                  className="bg-white border border-gray-200 text-black text-sm rounded-lg block w-full p-3.5"
+                  className="bg-white border border-gray-200 h-12 text-gray-500 text-sm rounded-md block w-11/12 pl-1"
                   placeholder=""
                   required
                 />
@@ -76,7 +97,7 @@ const Form = () => {
               <div className="mr-4 mb-2 md:mb-2">
                 <label
                   htmlFor="lastName"
-                  className="text-sm font-medium text-gray-600 block mb-1"
+                  className="text-sm font-medium text-black block mb-1"
                 >
                   Last Name
                 </label>
@@ -86,7 +107,7 @@ const Form = () => {
                   name="lastName"
                   value={formData.lastName}
                   onChange={handleChange}
-                  className="bg-white border border-gray-200 text-black text-sm rounded-lg block w-full p-3.5"
+                  className="bg-white border border-gray-200 h-12 text-gray-700 text-sm rounded-lg block w-11/12 pl-1"
                   placeholder=""
                   required
                 />
@@ -95,7 +116,7 @@ const Form = () => {
             <div className="mb-2 md:mb-2">
               <label
                 htmlFor="email"
-                className="text-sm font-medium text-gray-600 block mb-1"
+                className="text-sm font-medium text-black block mb-1"
               >
                 Email
               </label>
@@ -104,15 +125,15 @@ const Form = () => {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="bg-white border border-gray-200 text-black mb-3 text-sm rounded-lg w-11/12 block p-3.5"
+                className="bg-white border border-gray-200 text-gray-700 mb-3 text-sm rounded-lg w-11/12 block p-3.5"
                 required
               />
+              {emailError && (
+                <p className="text-red-500 text-xs">{emailError}</p>
+              )}
             </div>
 
-            <label
-              htmlFor="address"
-              className="text-sm font-medium text-gray-600"
-            >
+            <label htmlFor="address" className="text-sm font-medium text-black">
               Address
             </label>
             <textarea
@@ -120,7 +141,7 @@ const Form = () => {
               name="address"
               value={formData.address}
               onChange={handleChange}
-              className="bg-white border border-gray-200 text-black text-sm rounded-lg block w-11/12 p-2.5"
+              className="bg-white border border-gray-200 text-gray-700 text-sm rounded-lg block w-11/12 p-2.5"
               required
             />
           </fieldset>
@@ -128,7 +149,7 @@ const Form = () => {
             <button
               onClick={handlereset}
               type="button"
-              className="bg-gray-200 text-sm border-x-2 hover:bg-gray-300 text-black h-10 ml-auto w-24 font-semibold rounded-xl"
+              className="bg-gray-200 text-sm border-x-2 hover:bg-gray-700 text-black h-10 ml-auto w-24 font-semibold rounded-xl"
             >
               Reset
             </button>

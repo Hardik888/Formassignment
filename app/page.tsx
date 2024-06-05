@@ -8,10 +8,10 @@ import { store } from "./Redux-Store/store";
 export default function Home() {
   return (
     <Provider store={store}>
-      <main className="flex flex-col  ">
+      <main className="flex flex-col   ">
         <Header />
-        <section className="flex ml-24 w-2/4  ">
-          <div className="ml-1 -mt-14 p-4 ">
+        <section className="flex ml-20  w-3/4  ">
+          <div className=" -mt-14 p-4 ">
             <Hero />
             <div className="-ml-1 -mt-36 ">
               <Form />

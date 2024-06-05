@@ -1,12 +1,13 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { FormData } from "../Api/formInterface";
+import HandlePost from "../Api/handlepost";
 
 const initialState: FormData = {
   firstName: "",
   lastName: "",
   email: "",
   address: "",
-  profilePicture: null,
+  profilePicture: null, // Set initial value to null
 };
 
 const formSlice = createSlice({
@@ -27,9 +28,10 @@ const formSlice = createSlice({
     },
     updateProfilePicture: (
       state: FormData,
-      action: PayloadAction<File | null>
+      action: PayloadAction<string | null>
     ) => {
       state.profilePicture = action.payload;
+      console.log(state.profilePicture);
     },
     resetData: (state: FormData) => {
       state.firstName = initialState.firstName;
@@ -37,6 +39,9 @@ const formSlice = createSlice({
       state.email = initialState.email;
       state.address = initialState.address;
       state.profilePicture = initialState.profilePicture;
+    },
+    sendData: (state: FormData) => {
+      HandlePost(state);
     },
   },
 });
@@ -48,6 +53,7 @@ export const {
   updateAddress,
   updateProfilePicture,
   resetData,
+  sendData,
 } = formSlice.actions;
 
 export default formSlice.reducer;
