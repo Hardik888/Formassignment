@@ -3,5 +3,4 @@ export interface FormData {
   lastName: string;
   email: string;
   address: string;
-  profilePicture: string | null;
 }

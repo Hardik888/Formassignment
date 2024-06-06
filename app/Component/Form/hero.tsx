@@ -1,24 +1,23 @@
 import Image from "next/image";
 import React, { useState, ChangeEvent, DragEvent, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { updateProfilePicture } from "../../Redux-Store/formslice";
-import Form from "./form";
 
-export const ProfilePictureUpload: React.FC<{ onRemove: () => void }> = ({
-  onRemove,
+interface ProfilePictureUploadProps {
+  onProfilePictureChange: (newPicture: string | null) => void;
+}
+
+export const ProfilePictureUpload: React.FC<ProfilePictureUploadProps> = ({
+  onProfilePictureChange,
 }) => {
   const [preview, setPreview] = useState<string | null>(null);
-  const dispatch = useDispatch();
-  const profilePicture = useSelector((state: any) => state.profilePicture); // Assuming profilePicture is stored in the Redux state
-
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
         const result = reader.result as string;
-        dispatch(updateProfilePicture(result));
+
         setPreview(result);
+        onProfilePictureChange(result);
       };
       reader.readAsDataURL(file);
     }
@@ -35,21 +34,22 @@ export const ProfilePictureUpload: React.FC<{ onRemove: () => void }> = ({
       const reader = new FileReader();
       reader.onloadend = () => {
         const result = reader.result as string;
+
         setPreview(result);
       };
       reader.readAsDataURL(file);
     }
   };
 
-  const handleRemove = () => {
-    onRemove();
+  const Remove = () => {
     setPreview(null);
+    onProfilePictureChange(null);
   };
 
   return (
-    <div className="flex mt-4 ">
+    <div className="flex mt-4">
       <div
-        className="flex  bg-gray-100 rounded-full p-3  cursor-pointer"
+        className="flex bg-gray-100 rounded-full p-3 cursor-pointer"
         onDragOver={handleDragOver}
         onDrop={handleDrop}
         onClick={() => document.getElementById("fileInput")?.click()}
@@ -58,10 +58,10 @@ export const ProfilePictureUpload: React.FC<{ onRemove: () => void }> = ({
           <img
             src={preview}
             alt="Profile Preview"
-            className="w-24  h-24 rounded-full "
+            className="w-24 h-24 rounded-full"
           />
         ) : (
-          <div className="flex items-stretch  gap-2">
+          <div className="flex items-stretch gap-2">
             <Image
               src="/image/camera2.png"
               alt="Logo"
@@ -69,7 +69,7 @@ export const ProfilePictureUpload: React.FC<{ onRemove: () => void }> = ({
               width={20}
               height={8}
             />
-            <button className=" text-black text-xs font-bold ">
+            <button className="text-black text-xs font-bold">
               Drag or add Picture
             </button>
           </div>
@@ -84,8 +84,8 @@ export const ProfilePictureUpload: React.FC<{ onRemove: () => void }> = ({
       />
       {preview && (
         <button
-          onClick={handleRemove}
-          className="mt-4 bg-red-200 text-black ml-2  w-7 h-7 rounded-full"
+          onClick={Remove}
+          className="mt-4 bg-red-200 text-black ml-2 w-7 h-7 rounded-full"
         >
           X
         </button>
@@ -94,17 +94,20 @@ export const ProfilePictureUpload: React.FC<{ onRemove: () => void }> = ({
   );
 };
 
-const Hero: React.FC = () => {
-  const handleUpload = (image: string | null) => {
-    setProfilePicture(image);
+interface HeroProps {
+  setProfilePicture: (newPicture: string | null) => void;
+}
+
+const Hero: React.FC<HeroProps> = ({ setProfilePicture }) => {
+  const handlePictureChange = (newPicture: string | null) => {
+    setProfilePicture(newPicture);
+    console.log("new", newPicture);
   };
 
-  const [profilePicture, setProfilePicture] = useState<string | null>(null);
   return (
-    <section className=" mb-44 mt-20 h-max">
-      {" "}
+    <section className="mb-44 mt-20 h-max">
       <h1 className="w-full font-bold text-2xl pb-2">MyProfile</h1>
-      <ProfilePictureUpload />
+      <ProfilePictureUpload onProfilePictureChange={handlePictureChange} />
     </section>
   );
 };

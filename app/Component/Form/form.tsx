@@ -5,17 +5,23 @@ import {
   updateEmail,
   updateAddress,
   resetData,
-  updateProfilePicture,
-} from "../../Redux-Store/formslice";
-
-const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  submitFormSuccess,
+} from "../../store/formslice";
+import ProfilePictureUpload from "./hero";
 import { useState } from "react";
 import HandlePost from "@/app/Api/handlepost";
 
-const Form = () => {
+interface FormProps {
+  profilePicture: string | null;
+}
+
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+const Form: React.FC<FormProps> = ({ profilePicture }) => {
   const dispatch = useDispatch();
   const formData = useSelector((state: any) => state.form);
   const [emailError, setEmailError] = useState<string>("");
+  const [successMessage, setSuccessMessage] = useState<string>("");
 
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -30,7 +36,7 @@ const Form = () => {
         break;
       case "email":
         dispatch(updateEmail(value));
-        setEmailError(""); // Reset email error when email input changes
+        setEmailError("");
         break;
       case "address":
         dispatch(updateAddress(value));
@@ -47,11 +53,11 @@ const Form = () => {
       formData.lastName !== "" &&
       emailRegex.test(formData.email) &&
       formData.address !== "" &&
-      formData.profilePicture !== null
+      formData.profilePicture !== ""
     ) {
-      const response = await HandlePost(formData);
+      const response = await HandlePost(formData, profilePicture || "");
       if (response.status === 201) {
-        dispatch(updateProfilePicture("")); // Change empty string to null
+        setSuccessMessage("Successfully saved Remove The Image");
         dispatch(resetData());
       }
       return response;
@@ -68,7 +74,7 @@ const Form = () => {
   const handlereset = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     dispatch(resetData());
-    dispatch(updateProfilePicture(null)); // Update the profile picture to null upon reset
+    setSuccessMessage("");
   };
 
   return (
@@ -161,6 +167,9 @@ const Form = () => {
             </button>
           </div>
         </form>
+        {successMessage && (
+          <div className="text-green-600 mt-4">{successMessage}</div>
+        )}
       </div>
     </section>
   );
