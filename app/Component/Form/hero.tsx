@@ -1,5 +1,4 @@
-import Image from "next/image";
-import React, { useState, ChangeEvent, DragEvent, useEffect } from "react";
+import React, { useState, ChangeEvent, DragEvent } from "react";
 
 interface ProfilePictureUploadProps {
   onProfilePictureChange: (newPicture: string | null) => void;
@@ -9,17 +8,13 @@ export const ProfilePictureUpload: React.FC<ProfilePictureUploadProps> = ({
   onProfilePictureChange,
 }) => {
   const [preview, setPreview] = useState<string | null>(null);
-  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+
+  const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const result = reader.result as string;
-
-        setPreview(result);
-        onProfilePictureChange(result);
-      };
-      reader.readAsDataURL(file);
+      const compressedImage = await compressImage(file);
+      setPreview(compressedImage);
+      onProfilePictureChange(compressedImage);
     }
   };
 
@@ -27,23 +22,56 @@ export const ProfilePictureUpload: React.FC<ProfilePictureUploadProps> = ({
     event.preventDefault();
   };
 
-  const handleDrop = (event: DragEvent<HTMLDivElement>) => {
+  const handleDrop = async (event: DragEvent<HTMLDivElement>) => {
     event.preventDefault();
     const file = event.dataTransfer?.files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const result = reader.result as string;
-
-        setPreview(result);
-      };
-      reader.readAsDataURL(file);
+      const compressedImage = await compressImage(file);
+      setPreview(compressedImage);
+      onProfilePictureChange(compressedImage);
     }
   };
 
   const Remove = () => {
     setPreview(null);
     onProfilePictureChange(null);
+  };
+
+  const compressImage = async (file: File) => {
+    return new Promise<string>((resolve) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const image = new Image();
+        image.src = reader.result as string;
+        image.onload = () => {
+          const canvas = document.createElement("canvas");
+          const MAX_WIDTH = 500;
+          const MAX_HEIGHT = 500;
+          let width = image.width;
+          let height = image.height;
+
+          if (width > height) {
+            if (width > MAX_WIDTH) {
+              height *= MAX_WIDTH / width;
+              width = MAX_WIDTH;
+            }
+          } else {
+            if (height > MAX_HEIGHT) {
+              width *= MAX_HEIGHT / height;
+              height = MAX_HEIGHT;
+            }
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+
+          const ctx = canvas.getContext("2d");
+          ctx?.drawImage(image, 0, 0, width, height);
+          resolve(canvas.toDataURL("image/jpeg", 0.7)); // Adjust compression quality here (0.7 means 70% quality)
+        };
+      };
+      reader.readAsDataURL(file);
+    });
   };
 
   return (
@@ -62,13 +90,7 @@ export const ProfilePictureUpload: React.FC<ProfilePictureUploadProps> = ({
           />
         ) : (
           <div className="flex items-stretch gap-2">
-            <Image
-              src="/image/camera2.png"
-              alt="Logo"
-              className=""
-              width={20}
-              height={8}
-            />
+            <img src="/image/camera2.png" alt="Logo" width={20} height={8} />
             <button className="text-black text-xs font-bold">
               Drag or add Picture
             </button>
@@ -101,7 +123,7 @@ interface HeroProps {
 const Hero: React.FC<HeroProps> = ({ setProfilePicture }) => {
   const handlePictureChange = (newPicture: string | null) => {
     setProfilePicture(newPicture);
-    console.log("new", newPicture);
+    console.log(newPicture);
   };
 
   return (

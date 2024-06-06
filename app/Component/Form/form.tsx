@@ -59,6 +59,8 @@ const Form: React.FC<FormProps> = ({ profilePicture }) => {
       if (response.status === 201) {
         setSuccessMessage("Successfully saved Remove The Image");
         dispatch(resetData());
+      } else {
+        setEmailError("Upload a Smaller Image");
       }
       return response;
     } else {
